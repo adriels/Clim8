@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Clim8</string>
+    <string name="continue_as_guest">Or continue as a guest</string>
 </resources>
