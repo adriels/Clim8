@@ -1,6 +1,7 @@
 package com.adr.clim8.ui.presentation.screen.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
@@ -42,14 +43,17 @@ fun MainScreen(
     }
 }
 
+private fun checkAndRequestPermission(onResult: () -> Unit) {}
+
+
+@SuppressLint("MissingPermission")
 private fun getLatLon(context: Context): Pair<String, String> {
+    var latLon = Pair("", "")
     val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, object : LocationListener {
-        override fun onLocationChanged(p0: Location) {
-            TODO("Not yet implemented")
-        }
-
-    })
-
-    return Pair("", "")
+    locationManager.requestLocationUpdates(
+        LocationManager.GPS_PROVIDER, 0, 0f
+    ) {
+        latLon = Pair(it.latitude.toString(), it.longitude.toString())
+    }
+    return latLon
 }
